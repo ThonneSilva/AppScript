@@ -1,5 +1,5 @@
 function onSubmit(e) {
-  var webhookUrl = 'https://hook.us1.make.com/s3jsabl5ss064ijxdhvihmnyl60mvko2';
+  var webhookUrl = '2';
   var formData = {
     timestamp: e.values[0],
     name: e.values[1],
