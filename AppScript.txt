@@ -1,0 +1,36 @@
+function onSubmit(e) {
+  var webhookUrl = 'https://hook.us1.make.com/s3jsabl5ss064ijxdhvihmnyl60mvko2';
+  var formData = {
+    timestamp: e.values[0],
+    name: e.values[1],
+    email: e.values[2],
+    telefone: e.values[3],
+    rg: e.values[4],
+    cpf: e.values[5],
+    endereco: e.values[6],
+    pais: e.values[7],
+    fotofrenterg: e.values[8],
+    fotoversorg: e.values[9],
+    fotocomprovendereco: e.values[10],
+    certidao: e.values[11],
+    fotofrentediploma: e.values[12],
+    fotoversodiploma: e.values[13],
+    fotohistescolar: e.values[14], 
+    estouciente: e.values[15] 
+  };
+  
+  var options = {
+    'method': 'post',
+    'contentType': 'application/json',
+    'payload': JSON.stringify(formData)
+  };
+  UrlFetchApp.fetch(webhookUrl, options);
+}
+
+function createTrigger() {
+  var sheet = SpreadsheetApp.getActive();
+  ScriptApp.newTrigger('onSubmit')
+           .forSpreadsheet(sheet)
+           .onFormSubmit()
+           .create();
+}
