@@ -1,0 +1,47 @@
+// Importar as bibliotecas necessárias
+const express = require('express');
+const bodyParser = require('body-parser');
+const axios = require('axios');
+
+// Configurar o aplicativo Express
+const app = express();
+const port = 3000;
+
+// Middleware para analisar o corpo das requisições em JSON
+app.use(bodyParser.json());
+
+// URL do webhook para onde os dados serão enviados
+const webhookUrl = 'https://your-webhook-url.com'; // Substitua pela URL real do seu webhook
+
+// Rota para receber os dados do formulário e enviá-los para o webhook
+app.post('/api/form/submit', async (req, res) => {
+    try {
+        // Dados recebidos do formulário
+        const formData = req.body;
+
+        // Configurar as opções para a requisição HTTP
+        const options = {
+            method: 'POST',
+            url: webhookUrl,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: formData
+        };
+
+        // Enviar os dados para o webhook
+        await axios(options);
+
+        // Responder ao cliente com sucesso
+        res.status(200).send('Dados enviados com sucesso!');
+    } catch (error) {
+        // Tratar erros e responder com um status de erro
+        console.error('Erro ao enviar dados:', error);
+        res.status(500).send('Erro ao enviar dados');
+    }
+});
+
+// Iniciar o servidor
+app.listen(port, () => {
+    console.log(`Servidor rodando na porta ${port}`);
+});
